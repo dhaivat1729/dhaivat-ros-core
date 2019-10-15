@@ -1,0 +1,10 @@
+<launch>
+    <arg name="veh" default="default"/>
+    <arg name="pkg_name" default="pure_pursuit" doc="name of the package"/>
+    <arg name="node_name" default="pure_pursuit_node" doc="name of the node"/>
+
+    <group ns="$(arg veh)">
+        <node  pkg="$(arg pkg_name)" type="$(arg node_name).py" name="$(arg node_name)" output="screen" required="true">
+        </node>
+    </group>
+</launch>
