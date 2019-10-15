@@ -5,7 +5,7 @@ ARG REPO_NAME="<REPO_NAME_HERE>"
 # ==> Do not change this code
 ARG ARCH=arm32v7
 ARG MAJOR=daffy
-ARG BASE_TAG=${MAJOR}-${ARCH}
+ARG BASE_TAG=v1-arm32v7
 ARG BASE_IMAGE=dhaivat-ros-core
 
 # define base image
