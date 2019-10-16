@@ -70,11 +70,11 @@ def listener():
     rospy.init_node('pure_pursuit_node', anonymous=True)
     
 
-    rospy.Subscriber("/default/lane_filter_node/seglist_filtered", SegmentList, callback)
+    rospy.Subscriber("/bayesianduckie/lane_filter_node/seglist_filtered", SegmentList, callback)
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
 
 if __name__ == '__main__':
-    pub = rospy.Publisher('/default/joy_mapper_node/car_cmd', Twist2DStamped, queue_size=10)
+    pub = rospy.Publisher('/bayesianduckie/joy_mapper_node/car_cmd', Twist2DStamped, queue_size=10)
     listener()

@@ -1,15 +1,15 @@
 # parameters
-ARG REPO_NAME="<REPO_NAME_HERE>"
+ARG REPO_NAME="dhaivat-ros-core"
 
 # ==================================================>
 # ==> Do not change this code
 ARG ARCH=arm32v7
 ARG MAJOR=daffy
-ARG BASE_TAG=v1-arm32v7
-ARG BASE_IMAGE=dhaivat-ros-core
+ARG BASE_TAG=${MAJOR}-${ARCH}
+ARG BASE_IMAGE=dt-core
 
 # define base image
-FROM dhaivat666/${BASE_IMAGE}:${BASE_TAG}
+FROM duckietown/${BASE_IMAGE}:${BASE_TAG}
 
 # define repository path
 ARG REPO_NAME
