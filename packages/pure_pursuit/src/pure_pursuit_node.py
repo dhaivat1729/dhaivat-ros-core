@@ -59,7 +59,7 @@ def callback(data):
     else:
         alpha = np.arctan2(y_follow, x_follow)
         vel_msg.v = 0.25
-        vel_msg.omega = 5*vel_msg.v*(np.sin(alpha))/np.sqrt(x_follow**2 + y_follow**2)
+        vel_msg.omega = 25*vel_msg.v*(np.sin(alpha))/np.sqrt(x_follow**2 + y_follow**2)
         print(vel_msg.v, vel_msg.omega)
 
         pub.publish(vel_msg)
