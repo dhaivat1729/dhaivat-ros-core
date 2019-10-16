@@ -42,10 +42,10 @@ def callback(data):
     x_follow, y_follow = None, None
     if len(near_by_points_x_white) > 5:
         x_follow = np.mean(np.array(near_by_points_x_white))
-        y_follow = np.mean(np.array(near_by_points_y_white)) + 0.2
+        y_follow = np.mean(np.array(near_by_points_y_white)) + 0.1
     if len(near_by_points_x_yellow) > 5 and (x_follow == None and y_follow == None):
         x_follow = np.mean(np.array(near_by_points_x_yellow))
-        y_follow = np.mean(np.array(near_by_points_y_yellow)) - 0.2
+        y_follow = np.mean(np.array(near_by_points_y_yellow)) - 0.1
 
     print(x_follow, y_follow)
 
@@ -58,8 +58,8 @@ def callback(data):
 
     else:
         alpha = np.arctan2(y_follow, x_follow)
-        vel_msg.v = 0.4
-        vel_msg.omega = 2*vel_msg.v*(np.sin(alpha))/lookup_dist
+        vel_msg.v = 0.25
+        vel_msg.omega = 2*vel_msg.v*(np.sin(alpha))/np.sqrt(x_follow**2 + y_follow**2)
         print(vel_msg.v, vel_msg.omega)
 
         pub.publish(vel_msg)
