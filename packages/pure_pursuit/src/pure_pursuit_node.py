@@ -58,7 +58,7 @@ def callback(data):
 
     else:
         alpha = np.arctan2(y_follow, x_follow)
-        vel_msg.v = 0.15
+        vel_msg.v = 0.16
         vel_msg.omega = 8*vel_msg.v*(np.sin(alpha))/lookup_dist 
         print(vel_msg.v, vel_msg.omega)
 
