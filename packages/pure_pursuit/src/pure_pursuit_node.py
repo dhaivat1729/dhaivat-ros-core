@@ -57,20 +57,20 @@ def callback(data):
         x_white_var = np.var(np.array(near_by_points_x_white))
         y_white_var = np.var(np.array(near_by_points_y_white))
         if y_white_var < x_white_var:
-            v = 0.8
+            v = 0.5
             mul_const = 5
         else:
-            v = 0.3
+            v = 0.2
             mul_const = 8
 
     if v == None and len(near_by_points_x_yellow) > 0:
         x_yellow_var = np.var(np.array(near_by_points_x_yellow))
         y_yellow_var = np.var(np.array(near_by_points_y_yellow))
         if y_yellow_var < x_yellow_var:
-            v = 0.8
+            v = 0.5
             mul_const = 5
         else:
-            v = 0.3      
+            v = 0.2      
             mul_const = 8  
 
     ## if there are no detections
