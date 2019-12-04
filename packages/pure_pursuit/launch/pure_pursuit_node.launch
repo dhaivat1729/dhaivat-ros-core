@@ -1,4 +1,3 @@
-
 <launch>
 	<arg name="veh" default="$(env VEHICLE_NAME)"/>
 	<arg name="ai_trafo_mode" default="cb" doc="'cb' for colo balance only; 'both' for color balance and linear trafo"/>
@@ -22,8 +21,14 @@
 	<arg name="pkg_name" default="pure_pursuit" doc="name of the package"/>
     <arg name="node_name" default="pure_pursuit_node" doc="name of the node"/>
 	<group ns="$(arg veh)">
+		<remap from="pure_pursuit_node/car_cmd" to="joy_mapper_node/car_cmd"/>
+		<remap from="pure_pursuit_node/corrected_image/compressed" to="anti_instagram_node/corrected_image/compressed"/>
+		<remap from="pure_pursuit_node/segment_list" to="line_detector_node/segment_list"/>
+		<remap from="pure_pursuit_node/lane_pose" to="lane_filter_node/lane_pose"/>
+		<remap from="pure_pursuit_node/lineseglist_out" to="ground_projection/lineseglist_out"/>
+		<remap from="pure_pursuit_node/seglist_filtered" to="lane_filter_node/seglist_filtered"/>
+		<remap from="pure_pursuit_node/segment_list" to="ground_projection/lineseglist_out"/>
         <node  pkg="$(arg pkg_name)" type="$(arg node_name).py" name="$(arg node_name)" output="screen" required="true">
         </node>
     </group>
 </launch>
-

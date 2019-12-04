@@ -38,6 +38,8 @@ def callback(data):
                 near_by_points_y_yellow.append(segment_list[i].points[1].y)
 
     vel_msg = Twist2DStamped()
+
+    # import pdb; pdb.set_trace()
     # print(vel_msg)
     x_follow, y_follow = None, None
     if len(near_by_points_x_white) > 5:
@@ -49,6 +51,28 @@ def callback(data):
 
     print(x_follow, y_follow)
 
+    v = None
+
+    if len(near_by_points_x_white) != 0:
+        x_white_var = np.var(np.array(near_by_points_x_white))
+        y_white_var = np.var(np.array(near_by_points_y_white))
+        if y_white_var < x_white_var:
+            v = 0.8
+            mul_const = 5
+        else:
+            v = 0.3
+            mul_const = 8
+
+    if v == None and len(near_by_points_x_yellow) > 0:
+        x_yellow_var = np.var(np.array(near_by_points_x_yellow))
+        y_yellow_var = np.var(np.array(near_by_points_y_yellow))
+        if y_yellow_var < x_yellow_var:
+            v = 0.8
+            mul_const = 5
+        else:
+            v = 0.3      
+            mul_const = 8  
+
     ## if there are no detections
     if x_follow == None and y_follow == None:
         ## publish some small omega because we can't keep moving
@@ -58,8 +82,8 @@ def callback(data):
 
     else:
         alpha = np.arctan2(y_follow, x_follow)
-        vel_msg.v = 0.2
-        vel_msg.omega = 8*vel_msg.v*(np.sin(alpha))/lookup_dist 
+        vel_msg.v = v
+        vel_msg.omega = mul_const*vel_msg.v*(np.sin(alpha))/lookup_dist 
         print(vel_msg.v, vel_msg.omega)
 
         pub.publish(vel_msg)
@@ -67,14 +91,12 @@ def callback(data):
     
 def listener():
 
-    rospy.init_node('pure_pursuit_node', anonymous=True)
-    
-
-    rospy.Subscriber("/bayesianduckie/lane_filter_node/seglist_filtered", SegmentList, callback)
+    rospy.Subscriber("~seglist_filtered", SegmentList, callback)
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
 
 if __name__ == '__main__':
-    pub = rospy.Publisher('/bayesianduckie/joy_mapper_node/car_cmd', Twist2DStamped, queue_size=10)
+    rospy.init_node('pure_pursuit_node', anonymous=True)
+    pub = rospy.Publisher('~car_cmd', Twist2DStamped, queue_size=10)
     listener()
